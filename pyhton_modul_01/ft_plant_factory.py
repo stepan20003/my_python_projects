@@ -1,10 +1,10 @@
 class Plant:
-    def __init__(self, name, height, age):
+    def __init__(self, name: str, height: float, age: int) -> None:
         self.name = name
         self.height = height
         self.age = age
 
-    def show(self):
+    def show(self) -> None:
         print(f"Created: {self.name}: {round(self.height, 1)}cm,", end="")
         print(f"{self.age}days old")
 

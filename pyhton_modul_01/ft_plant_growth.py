@@ -1,9 +1,9 @@
 class Plant:
-    def __init__(self, name, height, age) -> None:
+    def __init__(self, name: str, height: float, age: int) -> None:
         self.name = name
         self.height = height
         self.age = age
-        self.count = 0
+        self.count = 0.0
         self.day = 1
 
     def show(self) -> None:

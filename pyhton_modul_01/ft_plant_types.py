@@ -45,8 +45,8 @@ class Tree(Plant):
             f"long and {self.diameter}cm wide"
         )
 
-    def show(self) -> None:
-        super().show()
+    def show(self, first: bool = True) -> None:
+        super().show(first)
         print(f"Trunk diameter: {self.diameter}cm")
 
 
