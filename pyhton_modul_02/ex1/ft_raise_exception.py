@@ -11,8 +11,8 @@ def input_temperature(temp_str: str) -> int:
         return int(temp_str)
 
 
-def test_temperature():
-    print("=== Garden Temperature ===")
+def test_temperature() -> None:
+    print("=== Garden Temperature Checker ===")
     for i in ['25', 'abc', '100', '-50']:
         try:
             z = input_temperature(i)
