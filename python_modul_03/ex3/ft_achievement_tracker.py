@@ -1,10 +1,13 @@
 import random
+
+
 def gen_player_achievements() -> set:
-    all_set = ['Crafting Genius', 'Strategist', 'World Savior', 'Speed Runner', 'Survivor',
-            'Master Explorer', 'Treasure Hunter', 'Unstoppable', 'First Steps', 'Collector Supreme', 
-            'Untouchable', 'Sharp Mind', 'Boss Slayer']
-    count = random.randint(1,len(all_set))
-    return(set(random.sample(all_set,count)))
+    all_set = ['Crafting Genius', 'Strategist', 'World Savior'
+               'Speed Runner', 'Survivor', 'Master Explorer', 'Treasure Hunter'
+               'Unstoppable', 'First Steps', 'Collector Supreme'
+               'Untouchable', 'Sharp Mind', 'Boss Slayer']
+    count = random.randint(1, len(all_set))
+    return (set(random.sample(all_set, count)))
 
 
 def gen_player() -> None:

@@ -1,3 +1,4 @@
+
 class GardenError(Exception):
     def __init__(self, message: str = "Unknown plant error") -> None:
         Exception.__init__(self, message)
