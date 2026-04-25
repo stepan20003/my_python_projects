@@ -25,7 +25,7 @@ class Plant:
                 print("=== Anonymous")
             else:
                 print(f"=== {self.__class__.__name__}")
-        print(f"{self.name}: {round(self.height,1)}cm, {self.age} days old")
+        print(f"{self.name}: {round(self.height, 1)}cm, {self.age} days old")
         self._stats.show_calls += 1
 
     @staticmethod

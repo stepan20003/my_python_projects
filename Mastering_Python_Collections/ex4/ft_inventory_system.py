@@ -12,7 +12,7 @@ def main() -> None:
                 first = 0
                 for x in i:
                     if x != ":" and first == 0:
-                        key+= x
+                        key += x
                     elif first == 1 or x == ":":
                         first = 1
                         if x == ":":
@@ -31,9 +31,9 @@ def main() -> None:
     lst2 = list(dict.values(my_dict))
     print(f"Item list: {list(dict.keys(my_dict))}")
     print(f"Total quantity of the {len(lst1)} items: {sum(lst2)}")
-    k = 0
     for i in lst1:
-        print(f"Item {i} represents {round((my_dict[i] / sum(lst2) * 100),1)}%")
+        print(f"Item {i} represents"
+              f"{round((my_dict[i] / sum(lst2) * 100), 1)}%")
     max = my_dict[lst1[0]]
     for i in lst1:
         if my_dict[i] >= max:
@@ -46,7 +46,7 @@ def main() -> None:
             min = my_dict[i]
             name = i
     print(f"Item least abundant: {name} with quantity {min}")
-    my_dict.update({'magic_item' : 1})
+    my_dict.update({'magic_item': 1})
     print(f"Updated inventory: {my_dict}")
 
 
