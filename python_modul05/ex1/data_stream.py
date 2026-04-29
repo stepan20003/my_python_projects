@@ -121,54 +121,73 @@ class DataStream:
                         handled = True
                         break
             if not handled:
-                print("no data")
-            
+                print(f"DataStream error - "
+                      f"Can't process element in stream: {i}")
+        if not stream:
+            print("No processor found, no data\n")
 
-
-
+    def print_pocessors_stats(self) -> None:
+        for i in self.processor:
+            if isinstance(i, NumericProcessor):
+                print(f"Numeric Processor: total {i.data_processor} items"
+                      f" processed, remaining {len(i.storage)} on processor")
+            if isinstance(i, TextProcessor):
+                print(f"Text Processor: total {i.data_processor} items"
+                      f" processed, remaining {len(i.storage)} on processor")
+            if isinstance(i, LogProcessor):
+                print(f"Log Processor: total {i.data_processor} items"
+                      f" processed, remaining {len(i.storage)} on processor")
 
 
 if __name__ == "__main__":
-    print("=== Code Nexus - Data Processor ===\n")
+
     num = NumericProcessor()
     text = TextProcessor()
     log = LogProcessor()
-    print("Testing Numeric Processor...")
-    print(f" Trying to validate input '42': {num.validate(42)}")
-    print(f" Trying to validate input 'Hello': {num.validate('Hello')}")
-    print(" Test invalid ingestion of string 'foo' without prior validation:")
-    try:
-        num.ingest("foo")
-    except ValueError as e:
-        print(f" Got exception: {e}")
-    lst1 = [1, 2, 3, 4, 5]
-    print(f" Processing data: {lst1}")
-    i = 3
-    print(f" Extracting {i} values...")
-    if num.validate(lst1):
-        num.ingest(lst1)
-        for i in range(i):
-            r, v = num.output()
-            print(f" Numeric value {r}: {v}")
+    proc = DataStream()
+    lst1 = [text, log]
+    proc.register_processor(num)
+    print("=== Code Nexus - Data Stream ===\n")
+    print("Initialize Data Stream...")
+    print("== DataStream statistics ==")
+    proc.process_stream([])
+    lst2 = [
+        "Hello world",
+        [3.14, -1, 2.71],
+        [
+            {
+                "log_level": "WARNING",
+                "log_message": "Telnet access! Use ssh instead",
+            },
+            {
+              "log_level": "INFO",
+              "log_message": "User wil is connected",
+            },
+        ],
+        42,
+        ["Hi", "five"],
+    ]
+    print(f"Send first batch of data on stream: {lst2}")
+    proc.process_stream(lst2)
+    proc.print_pocessors_stats()
+    print("\nRegistering other data processors")
+    print("Send the same batch again")
+    print("== DataStream statistics ==")
+    for i in lst1:
+        proc.register_processor(i)
 
-    print("\nTesting Text Processor...")
-    print(f" Trying to validate input '42': {text.validate(42)}")
-    lst2 = ['Hello', 'Nexus', 'World']
-    if text.validate(lst2):
-        print(f" Processing data: {lst2}")
-        text.ingest(lst2)
-        print(" Extracting 1 value...")
-        r, v = text.output()
-        print(f" Text value {r}: {v}\n")
-
-    print("Testing Log Processor...")
-    print(f" Trying to validate input 'Hello': {log.validate('Hello')}")
-    lst3 = [{'log_level': 'NOTICE', 'log_message': 'Connection to server'},
-            {'log_level': 'ERROR', 'log_message': 'Unauthorized access!!'}]
-    if log.validate(lst3):
-        log.ingest(lst3)
-        print(f" Processing data: {lst3}")
-        print(" Extracting 2 values...")
-        for i in range(2):
-            r, v = log.output()
-            print(f" Log entry {r}: {v}")
+    proc.process_stream(lst2)
+    proc.print_pocessors_stats()
+    n = 3
+    t = 2
+    la = 1
+    print(f"\nConsume some elements from the data processors:"
+          f" Numeric {n}, Text {t}, Log {la}")
+    print("== DataStream statistics ==")
+    for i in range(n):
+        num.output()
+    for i in range(t):
+        text.output()
+    for i in range(la):
+        log.output()
+    proc.print_pocessors_stats()
