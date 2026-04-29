@@ -15,7 +15,7 @@ def display(file: typing.IO) -> str:
     return transform(text)
 
 
-def main():
+def main() -> None:
     argv = sys.argv
     if len(argv) == 2:
         try:

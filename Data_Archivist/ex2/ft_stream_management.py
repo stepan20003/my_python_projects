@@ -15,7 +15,7 @@ def display(file: typing.IO) -> str:
     return transform(text)
 
 
-def main():
+def main() -> None:
     argv = sys.argv
     if len(argv) == 2:
         try:
@@ -28,7 +28,7 @@ def main():
             print("Transform data:")
             print(f"---\n{text}\n---")
             print("Enter new file name (or empty):", end=" ", flush=True)
-            new_file = sys.stdin.readline()[:-1]
+            new_file = sys.stdin.readline().strip()
             try:
                 fd = open(new_file, "w")
                 print(f"Saving data to '{new_file}'")

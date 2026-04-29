@@ -6,6 +6,7 @@ class DataProcessor(ABC):
     def __init__(self):
         self.storage = []
         self.count = 0
+        self.data_processor = 0
 
     @abstractmethod
     def validate(self, data: Any) -> bool:
@@ -39,9 +40,11 @@ class NumericProcessor(DataProcessor):
         if self.validate(data):
             if isinstance(data, (int, float)):
                 self.storage.append(str(data))
+                self.data_processor += 1
             if isinstance(data, list):
                 for i in data:
                     self.storage.append(str(i))
+                    self.data_processor += 1
         else:
             raise ValueError("Improper numeric data")
 
@@ -59,9 +62,11 @@ class TextProcessor(DataProcessor):
         if self.validate(data):
             if isinstance(data, (str)):
                 self.storage.append(data)
+                self.data_processor += 1
             if isinstance(data, list):
                 for i in data:
                     self.storage.append(i)
+                    self.data_processor += 1
         else:
             raise ValueError("Invalid data")
 
@@ -87,11 +92,40 @@ class LogProcessor(DataProcessor):
         if self.validate(data):
             if isinstance(data, (dict)):
                 self.storage.append(format(data))
+                self.data_processor += 1
             if isinstance(data, list):
                 for i in data:
                     self.storage.append(format(i))
+                    self.data_processor += 1
         else:
             raise ValueError("Invalid data")
+
+
+class DataStream:
+    def __init__(self):
+        self.processor: list[DataProcessor] = []
+
+    def register_processor(self, proc: DataProcessor) -> None:
+        self.processor.append(proc)
+
+    def process_stream(self, stream: list[Any]) -> None:
+        for i in stream:
+            handled = False
+            for proc in self.processor:
+                if proc.validate(i):
+                    try:
+                        proc.ingest(i)
+                        handled = True
+                        break
+                    except Exception:
+                        handled = True
+                        break
+            if not handled:
+                print("no data")
+            
+
+
+
 
 
 if __name__ == "__main__":
