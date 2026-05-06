@@ -3,8 +3,7 @@ import typing
 
 
 def transform(text: str) -> str:
-    result = text.replace("\n", "#\n")
-    return result
+    return "\n".join(line + "#" for line in text.splitlines()) + "\n"
 
 
 def display(file: typing.IO) -> str:

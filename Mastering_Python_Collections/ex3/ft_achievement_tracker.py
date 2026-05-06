@@ -2,10 +2,12 @@ import random
 
 
 def gen_player_achievements() -> set:
-    all_set = ['Crafting Genius', 'Strategist', 'World Savior'
-               'Speed Runner', 'Survivor', 'Master Explorer', 'Treasure Hunter'
-               'Unstoppable', 'First Steps', 'Collector Supreme'
-               'Untouchable', 'Sharp Mind', 'Boss Slayer']
+    all_set = [
+        'Crafting Genius', 'Strategist', 'World Savior'
+        'Speed Runner', 'Survivor', 'Master Explorer', 'Treasure Hunter'
+        'Unstoppable', 'First Steps', 'Collector Supreme'
+        'Untouchable', 'Sharp Mind', 'Boss Slayer'
+               ]
     count = random.randint(1, len(all_set))
     return (set(random.sample(all_set, count)))
 
@@ -20,8 +22,9 @@ def gen_player() -> None:
     print(f"Player Bob: {bob}")
     print(f"Player Charlie: {charlie}")
     print(f"Player Dylan: {dylan}\n")
-    print(f"All distinct achievements: {alice | bob | charlie | dylan}\n")
-    print(f"Comon achievements: {alice & bob & charlie & dylan}")
+    all_achiv = alice | bob | charlie | dylan
+    print(f"All distinct achievements: {all_achiv}\n")
+    print(f"Common achievements: {alice & bob & charlie & dylan}")
     print(f"Only Alice has: {alice - (bob | charlie | dylan)}")
     print(f"Only Bob has: {bob - (alice | charlie | dylan)}")
     print(f"Only Charlie has: {charlie - (alice | bob | dylan)}")

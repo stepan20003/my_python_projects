@@ -2,6 +2,7 @@ import sys
 
 
 def main() -> None:
+    print("=== Inventory System Analysis ===")
     argv = sys.argv[1:]
     my_dict = {}
     for i in argv:

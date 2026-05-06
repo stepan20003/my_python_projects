@@ -147,3 +147,4 @@ if __name__ == "__main__":
     p.show()
     print("[statistics for Unknown plant]")
     p._stats.display(p)
+isinstance
