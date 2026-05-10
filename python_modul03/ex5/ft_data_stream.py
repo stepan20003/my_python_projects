@@ -31,3 +31,4 @@ def consume_event() -> None:
 
 if __name__ == "__main__":
     consume_event()
++6
