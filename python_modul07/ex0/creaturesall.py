@@ -12,10 +12,10 @@ class Pyrodon(Creature):
 
 
 class Aquabub(Creature):
-    def attack(self):
+    def attack(self) -> str:
         return f"{type(self).__name__} uses Water Gun!"
 
 
 class Torragon(Creature):
-    def attack(self):
+    def attack(self) -> str:
         return f"{type(self).__name__} uses Hydro Pump!"

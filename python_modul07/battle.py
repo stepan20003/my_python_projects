@@ -1,7 +1,7 @@
-from ex0 import creaturefactory
+from ex0 import FlameFactory, AquaFactory, CreatureFactory
 
 
-def factory(obj: creaturefactory.CreatureFactory) -> None:
+def factory(obj: CreatureFactory) -> None:
     print("Testing factory")
     flameling = obj.create_base()
     print(flameling.describe())
@@ -11,8 +11,8 @@ def factory(obj: creaturefactory.CreatureFactory) -> None:
     print(f"{pyradon.attack()}\n")
 
 
-def battle(obj: creaturefactory.CreatureFactory,
-           obj2: creaturefactory.CreatureFactory) -> None:
+def battle(obj: CreatureFactory,
+           obj2: CreatureFactory) -> None:
     print("Testing battle")
     flameling = obj.create_base()
     print(flameling.describe())
@@ -25,6 +25,6 @@ def battle(obj: creaturefactory.CreatureFactory,
 
 
 if __name__ == "__main__":
-    factory(creaturefactory.FlameFactory())
-    factory(creaturefactory.AquaFactory())
-    battle(creaturefactory.FlameFactory(), creaturefactory.AquaFactory())
+    factory(FlameFactory())
+    factory(AquaFactory())
+    battle(FlameFactory(), AquaFactory())

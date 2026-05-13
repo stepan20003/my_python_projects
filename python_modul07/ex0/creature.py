@@ -6,8 +6,8 @@ class Creature(ABC):
         self.name = name
 
     @abstractmethod
-    def attack(self):
+    def attack(self) -> str:
         pass
 
     def describe(self) -> str:
-        return f"{type(self).__name__} is a {self.name}  type Creature"
+        return f"{type(self).__name__} is a {self.name} type Creature"
