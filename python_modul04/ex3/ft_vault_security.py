@@ -28,8 +28,9 @@ def secure_archive(file: str, text: str,
 
 
 if __name__ == "__main__":
+    print("=== Cyber Archives Security ===")
     print(secure_archive('/not/existing/file', 'r', ""))
-    print(secure_archive('/etc/master.passwd', 'r', ""))
+    print(secure_archive('/etc/master.passwd', 'w', ""))
     print(secure_archive('ancient_fragment.txt', 'r', ""))
     print(secure_archive('ancient_fragment.txt',
                          'w', "i am best programerrrrr"))
