@@ -3,8 +3,8 @@ from typing import Any
 
 
 class DataProcessor(ABC):
-    def __init__(self):
-        self.storage = []
+    def __init__(self) -> None:
+        self.storage: list[str] = []
         self.count = 0
 
     @abstractmethod
@@ -12,7 +12,7 @@ class DataProcessor(ABC):
         pass
 
     @abstractmethod
-    def ingest(self, data: Any) -> Any:
+    def ingest(self, data: Any) -> None:
         pass
 
     def output(self) -> tuple[int, str]:
@@ -48,7 +48,7 @@ class NumericProcessor(DataProcessor):
 
 class TextProcessor(DataProcessor):
     def validate(self, data: Any) -> bool:
-        if isinstance(data, (str)):
+        if isinstance(data, str):
             return True
         if isinstance(data, list):
             if all(isinstance(item, (str)) for item in data):
@@ -57,7 +57,7 @@ class TextProcessor(DataProcessor):
 
     def ingest(self, data: Any) -> None:
         if self.validate(data):
-            if isinstance(data, (str)):
+            if isinstance(data, str):
                 self.storage.append(data)
             if isinstance(data, list):
                 for i in data:
@@ -80,12 +80,12 @@ class LogProcessor(DataProcessor):
             return all(valid_dict(d) for d in data)
         return False
 
-    def ingest(self, data: dict[str, str] | list[dict[str, str]]) -> Any:
-        def format(d: dict[str, str] | list[dict[str, str]]) -> Any:
-            return ": ".join(f"{v}" for v in d.values())
+    def ingest(self, data: dict[str, str] | list[dict[str, str]]) -> None:
+        def format(d: dict[str, str]) -> str:
+            return ": ".join(d.values())
 
         if self.validate(data):
-            if isinstance(data, (dict)):
+            if isinstance(data, dict):
                 self.storage.append(format(data))
             if isinstance(data, list):
                 for i in data:

@@ -6,7 +6,7 @@ class JSONexpand:
     def process_output(self, data: list[tuple[int, str]]) -> None:
         json_string = "{"
         for i, (rank, value) in enumerate(data):
-            json_string += f'item_{rank}: "{value}"'
+            json_string += f'"item_{rank}": "{value}"'
             if i < len(data) - 1:
                 json_string += ", "
         json_string += "}"
@@ -30,8 +30,8 @@ class CSVExporter:
 
 
 class DataProcessor(ABC):
-    def __init__(self):
-        self.storage = []
+    def __init__(self) -> None:
+        self.storage: list[str] = []
         self.count = 0
         self.data_processor = 0
 
@@ -113,7 +113,7 @@ class LogProcessor(DataProcessor):
         return False
 
     def ingest(self, data: dict[str, str] | list[dict[str, str]]) -> Any:
-        def format(d: dict[str, str] | list[dict[str, str]]) -> Any:
+        def format(d: dict[str, str]) -> Any:
             return ": ".join(f"{v}" for v in d.values())
 
         if self.validate(data):
@@ -134,7 +134,7 @@ class ExportPlugin(Protocol):
 
 
 class DataStream:
-    def __init__(self):
+    def __init__(self) -> None:
         self.processor: list[DataProcessor] = []
 
     def register_processor(self, proc: DataProcessor) -> None:

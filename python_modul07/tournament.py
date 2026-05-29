@@ -23,19 +23,18 @@ def battle(opponents: list[tuple[CreatureFactory, BattleStrategy]]):
             print("now fight!")
 
             try:
+                a = strat2.__class__.__name__.replace('Strategy', '').lower()
+                a += ' strategy'
+                b = strat1.__class__.__name__.replace('Strategy', '').lower()
+                b += ' strategy'
                 if not strat1.is_valid(c1):
-                    raise StrategyError(
-                        f"Invalid Creature '{type(c1).__name__}' for this "
-                        f"{(strat1.__class__.__name__.replace('Strategy', '')
-                            .lower() + ' strategy')}"
-                    )
+                    raise StrategyError(f"Invalid Creature "
+                                        f"'{type(c1).__name__}' for this {b}")
 
                 if not strat2.is_valid(c2):
-                    raise StrategyError(
-                        f"Invalid Creature '{type(c1).__name__}' for this "
-                        f"{(strat2.__class__.__name__.replace('Strategy', '')
-                            .lower() + ' strategy')}"
-                    )
+                    
+                    raise StrategyError(f"Invalid Creature "
+                                        f"'{type(c1).__name__}' for this {a}")
 
                 print(strat1.act(c1, c2))
                 print(strat2.act(c2, c1))

@@ -3,8 +3,8 @@ from typing import Any
 
 
 class DataProcessor(ABC):
-    def __init__(self):
-        self.storage = []
+    def __init__(self) -> None:
+        self.storage: list[str] = []
         self.count = 0
         self.data_processor = 0
 
@@ -85,12 +85,12 @@ class LogProcessor(DataProcessor):
             return all(valid_dict(d) for d in data)
         return False
 
-    def ingest(self, data: dict[str, str] | list[dict[str, str]]) -> Any:
-        def format(d: dict[str, str] | list[dict[str, str]]) -> Any:
-            return ": ".join(f"{v}" for v in d.values())
+    def ingest(self, data: dict[str, str] | list[dict[str, str]]) -> None:
+        def format(d: dict[str, str]) -> str:
+            return ": ".join(d.values())
 
         if self.validate(data):
-            if isinstance(data, (dict)):
+            if isinstance(data, dict):
                 self.storage.append(format(data))
                 self.data_processor += 1
             if isinstance(data, list):
@@ -102,7 +102,7 @@ class LogProcessor(DataProcessor):
 
 
 class DataStream:
-    def __init__(self):
+    def __init__(self) -> None:
         self.processor: list[DataProcessor] = []
 
     def register_processor(self, proc: DataProcessor) -> None:
@@ -126,7 +126,7 @@ class DataStream:
         if not stream:
             print("No processor found, no data\n")
 
-    def print_pocessors_stats(self) -> None:
+    def print_processors_stats(self) -> None:
         for i in self.processor:
             if isinstance(i, NumericProcessor):
                 print(f"Numeric Processor: total {i.data_processor} items"
@@ -169,7 +169,7 @@ if __name__ == "__main__":
     ]
     print(f"Send first batch of data on stream: {lst2}")
     proc.process_stream(lst2)
-    proc.print_pocessors_stats()
+    proc.print_processors_stats()
     print("\nRegistering other data processors")
     print("Send the same batch again")
     print("== DataStream statistics ==")
@@ -177,17 +177,17 @@ if __name__ == "__main__":
         proc.register_processor(i)
 
     proc.process_stream(lst2)
-    proc.print_pocessors_stats()
+    proc.print_processors_stats()
     n = 3
     t = 2
     la = 1
     print(f"\nConsume some elements from the data processors:"
           f" Numeric {n}, Text {t}, Log {la}")
     print("== DataStream statistics ==")
-    for i in range(n):
+    for _ in range(n):
         num.output()
-    for i in range(t):
+    for _ in range(t):
         text.output()
-    for i in range(la):
+    for _ in range(la):
         log.output()
-    proc.print_pocessors_stats()
+    proc.print_processors_stats()

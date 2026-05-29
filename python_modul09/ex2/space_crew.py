@@ -58,7 +58,7 @@ if __name__ == "__main__":
     print("Space Mission Crew Validation")
     print("="*40)
     print("Valid mission created:")
-    SPACE_MISSIONS = {
+    valid_data = {
         'mission_id': 'M2024_MARS',
         'mission_name': 'Mars Colony Establishment',
         'destination': 'Mars',
@@ -93,11 +93,54 @@ if __name__ == "__main__":
                 'years_experience': 15,
                 'is_active': True
             },
-    
+
         ]
     }
     try:
-        valid = SpaceMission(**SPACE_MISSIONS)
-        print(valid)
+        mission = SpaceMission(**valid_data)
+
+        print("Valid mission created:")
+        print(f"Mission: {mission.mission_name}")
+        print(f"ID: {mission.mission_id}")
+        print(f"Destination: {mission.destination}")
+        print(f"Duration: {mission.duration_days} days")
+        print(f"Budget: ${mission.budget_millions}M")
+        print(f"Crew size: {len(mission.crew)}")
+
+        print("Crew members:")
+        for member in mission.crew:
+            print(
+                f"- {member.name} "
+                f"({member.rank.value}) - "
+                f"{member.specialization}"
+            )
+
     except (ValueError, ValidationError) as e:
         print(e)
+    print("=" * 41)
+    invalid_data = {
+        "mission_id": "M2024_FAIL",
+        "mission_name": "Failed Mission",
+        "destination": "Moon",
+        "launch_date": "2024-06-01T00:00:00",
+        "duration_days": 100,
+        "budget_millions": 500.0,
+        "crew": [
+            {
+                "member_id": "CM010",
+                "name": "Bob Wilson",
+                "rank": "officer",
+                "age": 30,
+                "specialization": "Engineering",
+                "years_experience": 3,
+                "is_active": True
+            }
+        ]
+    }
+
+    try:
+        SpaceMission(**invalid_data)
+
+    except ValidationError as e:
+        print("Expected validation error:")
+        print(e.errors()[0]["msg"][13:])
