@@ -55,5 +55,3 @@ if __name__ == "__main__":
     lst1 = [fireball, heal]
     sequence = spell_sequence(lst1)
     print(sequence("Dragon", 60))
-
-

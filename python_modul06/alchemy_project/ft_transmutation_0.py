@@ -1,5 +1,6 @@
-from alchemy.transmutation import recipes
+import alchemy.transmutation.recipes
+
 print("=== Transmutation 0 ===")
 print("Using file alchemy/transmutation/recipes.py directly")
 print("Testing lead to gold: ", end="")
-print(recipes.lead_to_gold())
+print(alchemy.transmutation.recipes.lead_to_gold())

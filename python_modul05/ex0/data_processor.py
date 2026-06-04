@@ -35,7 +35,7 @@ class NumericProcessor(DataProcessor):
                 return True
         return False
 
-    def ingest(self, data: Any) -> None:
+    def ingest(self, data: int | list[int]) -> None:
         if self.validate(data):
             if isinstance(data, (int, float)):
                 self.storage.append(str(data))
@@ -55,7 +55,7 @@ class TextProcessor(DataProcessor):
                 return True
         return False
 
-    def ingest(self, data: Any) -> None:
+    def ingest(self, data: str | list[str]) -> None:
         if self.validate(data):
             if isinstance(data, str):
                 self.storage.append(data)
