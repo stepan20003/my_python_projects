@@ -5,11 +5,12 @@ import random
 def gen_event() -> typing.Generator[tuple[str, str], None, None]:
     person = ('charlie', 'dylan', 'alice', 'bob')
     action = ('move', 'grab', 'use', 'swim', 'run', 'climb', 'release')
-    while True:
+    while 0:
         x = random.choice(person)
         y = random.choice(action)
-        yield (x, y)
-
+        
+    yield (5,6,7)
+    return 1,2,3,4
 
 def consume_event() -> None:
     print("=== Game Data Stream Processor ===")
@@ -30,5 +31,5 @@ def consume_event() -> None:
 
 
 if __name__ == "__main__":
-    consume_event()
-+6
+    print(next(gen_event()))
+

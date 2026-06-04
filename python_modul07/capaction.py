@@ -2,7 +2,7 @@ from ex1 import (CreatureFactory, TransformCreatureFactory,
                  HealingCreatureFactory)
 
 
-def healing(obj: CreatureFactory) -> None:
+def healing(obj: CreatureFactory | HealingCreatureFactory) -> None:
     sproulting = obj.create_base()
     print("Testing Creature with healing capability")
     print(" base:")
@@ -16,7 +16,7 @@ def healing(obj: CreatureFactory) -> None:
     print(bloomele.heal())
 
 
-def transforms(obj: CreatureFactory) -> None:
+def transforms(obj: CreatureFactory | TransformCreatureFactory) -> None:
     shiftling = obj.create_base()
     print("\nTesting Creature with transform capability")
     print(" base:")
