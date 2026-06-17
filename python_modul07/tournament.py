@@ -1,12 +1,9 @@
-from typing import Callable
-from ex2 import NormalStrategy, AggressiveStrategy, DefensiveStrategy, StrategyError, BattleStrategy
-from ex0.creature import Creature
-from ex1 import HealingCreatureFactory, TransformCreatureFactory
-from ex0 import FlameFactory, AquaFactory
+from ex2 import (NormalStrategy, AggressiveStrategy, DefensiveStrategy,
+                 StrategyError, BattleStrategy)
+from ex0 import CreatureFactory, Creature
 
 
-def battle(opponents: list[tuple[Callable[[], Creature], BattleStrategy]]):
-
+def battle(opponents: list[tuple[CreatureFactory, BattleStrategy]]):
     print("*** Tournament ***")
     print(f"{len(opponents)} opponents involved")
 
@@ -16,8 +13,8 @@ def battle(opponents: list[tuple[Callable[[], Creature], BattleStrategy]]):
             factory1, strat1 = opponents[i]
             factory2, strat2 = opponents[j]
 
-            c1 = factory1()
-            c2 = factory2()
+            c1: Creature = factory1()
+            c2: Creature = factory2()
 
             print("* Battle *")
             print(c1.describe())
@@ -27,15 +24,54 @@ def battle(opponents: list[tuple[Callable[[], Creature], BattleStrategy]]):
 
             try:
                 if not strat1.is_valid(c1):
-                    raise StrategyError(f"Invalid Creature '{c1.name}'")
+                    x = type(c1).__name__
+                    y = strat1.__class__.__name__.replace('Strategy', '')
+                    z = ' strategy'
+                    raise StrategyError(f"Invalid Creature"
+                                        f" '{x}' for this "
+                                        f"{y.lower() + z}")
 
                 if not strat2.is_valid(c2):
-                    raise StrategyError(f"Invalid Creature '{c2.name}'")
-
+                    x = type(c2).__name__
+                    y = strat2.__class__.__name__.replace('Strategy', '')
+                    z = ' strategy'
+                    raise StrategyError(f"Invalid Creature"
+                                        f" '{x}' for this "
+                                        f"{y.lower() + z}")
                 print(strat1.act(c1, c2))
                 print(strat2.act(c2, c1))
 
             except StrategyError as e:
                 print(f"Battle error, aborting tournament: {e}")
                 return
-        
+
+
+if __name__ == "__main__":
+
+    from ex1 import HealingCreatureFactory, TransformCreatureFactory
+    from ex0 import FlameFactory, AquaFactory
+    print("Tournament 0 (basic)")
+    print("[ (Flameling+Normal), (Healing+Defensive) ]")
+    Sproutling = HealingCreatureFactory()
+    Shiftling = TransformCreatureFactory()
+    Flameling = FlameFactory()
+    Aquabub = AquaFactory()
+    battle([
+        (Flameling.create_base, NormalStrategy()),
+        (Sproutling.create_base, DefensiveStrategy()),
+    ])
+
+    print("\nTournament 1 (error)")
+    print("[ (Flameling+Aggressive), (Healing+Defensive) ]")
+    battle([
+        (Flameling.create_base, AggressiveStrategy()),
+        (Sproutling.create_base, DefensiveStrategy()),
+    ])
+
+    print("\nTournament 2 (multiple)")
+    print(" [ (Aquabub+Normal), (Healing+Defensive), (Transform+Aggressive) ]")
+    battle([
+        (Aquabub.create_base, NormalStrategy()),
+        (Sproutling.create_base, DefensiveStrategy()),
+        (Shiftling.create_base, AggressiveStrategy()),
+    ])

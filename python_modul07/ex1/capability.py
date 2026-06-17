@@ -2,7 +2,7 @@ from abc import ABC, abstractmethod
 
 
 class HealCapability(ABC):
-    def __init__(self):
+    def __init__(self) -> None:
         pass
 
     @abstractmethod
