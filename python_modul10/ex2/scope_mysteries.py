@@ -1,4 +1,5 @@
 from collections.abc import Callable
+from typing import Any
 
 
 def mage_counter() -> Callable:
@@ -34,7 +35,7 @@ def memory_vault() -> dict[str, Callable]:
         my_dict.update({key: value})
         return my_dict
 
-    def recall(key: str):
+    def recall(key: str) -> dict[Any, Any] | str | int:
         if key in my_dict:
             return my_dict[key]
         return "Memory not found"

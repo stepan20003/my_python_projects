@@ -14,7 +14,7 @@ def spell_reducer(spells: list[int], operation: str) -> int:
         name = getattr(operator, operation)
         result = reduce(name, spells)
     except Exception as e:
-        return e
+        print(e)
     return result
 
 

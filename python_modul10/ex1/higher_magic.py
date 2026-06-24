@@ -48,7 +48,7 @@ if __name__ == "__main__":
     print("Testing power amplifier...")
     amplifier = power_amplifier(heal, 5)
     print(amplifier("Dragon", 10))
-    print("Testing conditional caster...")    
+    print("Testing conditional caster...")
     caster = conditional_caster(fireball, heal)
     print(caster("dragon", 30))
     print("Testing spell sequence...")
