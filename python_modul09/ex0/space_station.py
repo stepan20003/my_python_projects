@@ -14,7 +14,7 @@ class SpaceStation(BaseModel):
     notes: Optional[str] = Field(default=None, max_length=200)
 
 
-def main():
+def main() -> None:
     print("Space Station Data Validation")
     print("=" * 40)
     station = SpaceStation(
@@ -23,7 +23,7 @@ def main():
         crew_size=6,
         power_level=85.5,
         oxygen_level=92.3,
-        last_maintenance="2026-05-24T10:30:00",
+        last_maintenance=datetime.fromisoformat("2026-05-24T10:30:00"),
         notes="Main orbital research station"
     )
     print("Valid station created:")
@@ -41,7 +41,7 @@ def main():
             crew_size=21,
             power_level=85.5,
             oxygen_level=92.3,
-            last_maintenance="2026-05-24T10:30:00",
+            last_maintenance=datetime.fromisoformat("2026-05-24T10:30:00"),
             notes="Main orbital research station"
         )
         print(invalid_station)

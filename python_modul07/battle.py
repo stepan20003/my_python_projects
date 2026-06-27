@@ -1,30 +1,36 @@
-from ex0 import FlameFactory, AquaFactory, CreatureFactory
+#!/usr/bin/env python3
+
+from ex0 import CreatureFactory, FlameFactory, AquaFactory
 
 
-def factory(obj: CreatureFactory) -> None:
-    print("Testing factory")
-    flameling = obj.create_base()
-    print(flameling.describe())
-    print(flameling.attack())
-    pyradon = obj.create_evolved()
-    print(pyradon.describe())
-    print(f"{pyradon.attack()}\n")
+def test_factory(factory: CreatureFactory) -> None:
+    base = factory.create_base()
+    evolved = factory.create_evolved()
+
+    print(base.describe())
+    print(base.attack())
+    print(evolved.describe())
+    print(evolved.attack())
 
 
-def battle(obj: CreatureFactory,
-           obj2: CreatureFactory) -> None:
-    print("Testing battle")
-    flameling = obj.create_base()
-    print(flameling.describe())
-    print(" vs.")
-    aquabub = obj2.create_base()
-    print(aquabub.describe())
-    print(" fight!")
-    print(flameling.attack())
-    print(aquabub.attack())
+def test_battle(factory1: CreatureFactory, factory2: CreatureFactory) -> None:
+    c1 = factory1.create_base()
+    c2 = factory2.create_base()
+
+    print(f"{c1.describe()}\n vs.\n{c2.describe()}\n fight!")
+    print(c1.attack())
+    print(c2.attack())
 
 
 if __name__ == "__main__":
-    factory(FlameFactory())
-    factory(AquaFactory())
-    battle(FlameFactory(), AquaFactory())
+    flame = FlameFactory()
+    aqua = AquaFactory()
+
+    print("Testing factory")
+    test_factory(flame)
+    print()
+    print("Testing factory")
+    test_factory(aqua)
+    print()
+    print("Testing battle")
+    test_battle(flame, aqua)

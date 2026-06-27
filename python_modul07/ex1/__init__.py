@@ -1,6 +1,5 @@
-from .capabilityfactory import TransformCreatureFactory, HealingCreatureFactory
+#!/usr/bin/env python3
 
-__all__ = [
-    "TransformCreatureFactory",
-    "HealingCreatureFactory"
-]
+from .creature_factory import HealingCreatureFactory, TransformCreatureFactory
+
+__all__ = ["HealingCreatureFactory", "TransformCreatureFactory"]

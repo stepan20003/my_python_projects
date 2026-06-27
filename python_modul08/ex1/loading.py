@@ -1,5 +1,6 @@
 import sys
 import importlib
+from typing import Any
 
 
 req = {
@@ -10,9 +11,9 @@ req = {
     }
 
 
-def check_dependencies():
-    loaded = {}
-    missing = []
+def check_dependencies() -> tuple[dict[str, Any], list[str]]:
+    loaded: dict[str, Any] = {}
+    missing: list[Any] = []
 
     print("LOADING STATUS: Loading programs...\n")
     print("Checking dependencies:")
@@ -28,7 +29,7 @@ def check_dependencies():
     return loaded, missing
 
 
-def show_installation_help(missing_packages):
+def show_installation_help(missing_packages: list[str]) -> None:
     """Display installation instructions."""
 
     if not missing_packages:
@@ -47,7 +48,7 @@ def show_installation_help(missing_packages):
         print(f"- {package}")
 
 
-def compare_package_management():
+def compare_package_management() -> None:
     """Show pip vs Poetry differences."""
 
     print("\nPACKAGE MANAGEMENT COMPARISON")
@@ -65,9 +66,9 @@ def compare_package_management():
     print("  - Better project management")
 
 
-def analyze_matrix_data(np, pd, plt):
+def analyze_matrix_data(np: Any, pd: Any, plt: Any) -> None:
     print("\nAnalyzing Matrix data...")
-    matrix_data = np.random.randint(0, 2, size=(1000, 5))
+    matrix_data = np.random.randint(0, 2, size=(1000, 10))
     df = pd.DataFrame(
         matrix_data,
         columns=[
@@ -83,7 +84,7 @@ def analyze_matrix_data(np, pd, plt):
     print("\nMatrix Signal Strength:")
     print(means)
     print("\nGenerating visualization...")
-    fig, ax = plt.subplots(figsize=(8, 5))
+    _, ax = plt.subplots(figsize=(8, 5))
     ax.bar(means.index, means.values)
     ax.set_title("Matrix Data Analysis")
     ax.set_ylabel("Average Signal")
@@ -94,7 +95,7 @@ def analyze_matrix_data(np, pd, plt):
     print(f"Results saved to: {filename}")
 
 
-def main():
+def main() -> None:
     loaded, missing = check_dependencies()
     compare_package_management()
     required_core = ["pandas", "numpy", "matplotlib"]

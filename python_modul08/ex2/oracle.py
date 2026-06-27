@@ -3,11 +3,11 @@ import sys
 from dotenv import dotenv_values
 
 
-def reading() -> dict[str, str]:
+def reading() -> dict[str, str | None]:
     return dotenv_values(".env")
 
 
-def get_config(key: str, file_config: dict[str, str]) -> str | None:
+def get_config(key: str, file_config: dict[str, str | None]) -> str | None:
     return os.getenv(key) or file_config.get(key)
 
 
@@ -18,7 +18,7 @@ def require(key: str, value: str | None) -> str:
     return value
 
 
-def main():
+def main() -> None:
 
     file_config = reading()
 

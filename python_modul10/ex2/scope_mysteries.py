@@ -39,7 +39,7 @@ def memory_vault() -> dict[str, Callable]:
         if key in my_dict:
             return my_dict[key]
         return "Memory not found"
-    return {"Store": store, "Recall": recall}
+    return {"store": store, "recall": recall}
 
 
 if __name__ == "__main__":
@@ -60,9 +60,9 @@ if __name__ == "__main__":
     print(f"{shield('Shield')}\n")
     print("Testing memory vault...")
     dict1 = memory_vault()
-    store = dict1["Store"]
+    store = dict1["store"]
     store("secret", 42)
-    recall = dict1["Recall"]
+    recall = dict1["recall"]
     print("Store 'secret' = 42")
     print(f"Recall 'secret': {recall('secret')}")
     print(f"Recall 'unknown': {recall('unknown')}")

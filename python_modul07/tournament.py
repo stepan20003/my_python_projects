@@ -1,77 +1,49 @@
-from ex2 import (NormalStrategy, AggressiveStrategy, DefensiveStrategy,
-                 StrategyError, BattleStrategy)
-from ex0 import CreatureFactory, Creature
+#!/usr/bin/env python3
+
+from ex0 import FlameFactory, AquaFactory
+from ex1 import HealingCreatureFactory, TransformCreatureFactory
+from ex2 import NormalStrategy, AggressiveStrategy, DefensiveStrategy
+from ex2.battle_strategy import CreatureError
+from ex0.creature_factory import CreatureFactory
+from ex2.battle_strategy import BattleStrategy
 
 
-def battle(opponents: list[tuple[CreatureFactory, BattleStrategy]]):
+def battle(opponents: list[tuple[CreatureFactory, BattleStrategy]]) -> None:
     print("*** Tournament ***")
     print(f"{len(opponents)} opponents involved")
-
-    for i in range(len(opponents)):
-        for j in range(i + 1, len(opponents)):
-
-            factory1, strat1 = opponents[i]
-            factory2, strat2 = opponents[j]
-
-            c1: Creature = factory1()
-            c2: Creature = factory2()
-
+    creatures = [(factory.create_base(), strategy)
+                 for factory, strategy in opponents]
+    for i in range(len(creatures)):
+        for j in range(i + 1, len(creatures)):
+            creature1, strategy1 = creatures[i]
+            creature2, strategy2 = creatures[j]
             print("* Battle *")
-            print(c1.describe())
-            print("vs.")
-            print(c2.describe())
-            print("now fight!")
-
+            print(f"{creature1.describe()} vs. "
+                  f"{creature2.describe()} now fight!")
             try:
-                if not strat1.is_valid(c1):
-                    x = type(c1).__name__
-                    y = strat1.__class__.__name__.replace('Strategy', '')
-                    z = ' strategy'
-                    raise StrategyError(f"Invalid Creature"
-                                        f" '{x}' for this "
-                                        f"{y.lower() + z}")
-
-                if not strat2.is_valid(c2):
-                    x = type(c2).__name__
-                    y = strat2.__class__.__name__.replace('Strategy', '')
-                    z = ' strategy'
-                    raise StrategyError(f"Invalid Creature"
-                                        f" '{x}' for this "
-                                        f"{y.lower() + z}")
-                print(strat1.act(c1, c2))
-                print(strat2.act(c2, c1))
-
-            except StrategyError as e:
-                print(f"Battle error, aborting tournament: {e}")
+                strategy1.act(creature1)
+                strategy2.act(creature2)
+            except CreatureError as e:
+                print(e)
                 return
 
 
 if __name__ == "__main__":
-
-    from ex1 import HealingCreatureFactory, TransformCreatureFactory
-    from ex0 import FlameFactory, AquaFactory
+    flame = FlameFactory()
+    aqua = AquaFactory()
+    heal = HealingCreatureFactory()
+    transform = TransformCreatureFactory()
+    normal = NormalStrategy()
+    aggressive = AggressiveStrategy()
+    defensive = DefensiveStrategy()
     print("Tournament 0 (basic)")
     print("[ (Flameling+Normal), (Healing+Defensive) ]")
-    Sproutling = HealingCreatureFactory()
-    Shiftling = TransformCreatureFactory()
-    Flameling = FlameFactory()
-    Aquabub = AquaFactory()
-    battle([
-        (Flameling.create_base, NormalStrategy()),
-        (Sproutling.create_base, DefensiveStrategy()),
-    ])
-
-    print("\nTournament 1 (error)")
+    battle([(flame, normal), (heal, defensive)])
+    print()
+    print("Tournament 1 (error)")
     print("[ (Flameling+Aggressive), (Healing+Defensive) ]")
-    battle([
-        (Flameling.create_base, AggressiveStrategy()),
-        (Sproutling.create_base, DefensiveStrategy()),
-    ])
-
-    print("\nTournament 2 (multiple)")
-    print(" [ (Aquabub+Normal), (Healing+Defensive), (Transform+Aggressive) ]")
-    battle([
-        (Aquabub.create_base, NormalStrategy()),
-        (Sproutling.create_base, DefensiveStrategy()),
-        (Shiftling.create_base, AggressiveStrategy()),
-    ])
+    battle([(flame, aggressive), (heal, defensive)])
+    print()
+    print("Tournament 2 (multiple)")
+    print("[ (Aquabub+Normal), (Healing+Defensive), (Transform+Aggressive) ]")
+    battle([(aqua, normal), (heal, defensive), (transform, aggressive)])

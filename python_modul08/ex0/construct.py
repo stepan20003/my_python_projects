@@ -3,7 +3,7 @@ import os
 import site
 
 
-def construct():
+def construct() -> None:
     if sys.base_prefix == sys.prefix:
         print("\n MATRIX STATUS: You're still plugged in")
         print(f"\nCurrent Python: {sys.executable}")

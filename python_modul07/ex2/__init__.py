@@ -1,10 +1,9 @@
-from .strategy import BattleStrategy, StrategyError
-from .attack import NormalStrategy, AggressiveStrategy, DefensiveStrategy
+#!/usr/bin/env python3
+
+from .strategy import NormalStrategy, AggressiveStrategy, DefensiveStrategy
 
 __all__ = [
-    "BattleStrategy",
-    "StrategyError",
     "NormalStrategy",
     "AggressiveStrategy",
     "DefensiveStrategy"
-]
+    ]

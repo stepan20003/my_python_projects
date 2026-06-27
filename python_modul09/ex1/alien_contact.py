@@ -28,8 +28,8 @@ class AlienContact(BaseModel):
             raise ValueError("Contact ID must start with 'AC'.")
         if self.contact_type == ContactType.physical and not self.is_verified:
             raise ValueError("Physical contact reports must be verified")
-        if self.contact_type == (ContactType.telepathic and
-                                 self.witness_count > 3):
+        if self.contact_type == ContactType.telepathic \
+           and self.witness_count < 3:
             raise ValueError("Telepathic contact requires"
                              " at least 3 witnesses")
         if self.signal_strength > 7.0 and not self.message_received:
@@ -42,7 +42,8 @@ def printer(obj: AlienContact) -> None:
     print(f"ID: {obj.contact_id}")
     print(f"Type: {obj.contact_type}")
     print(f"Location: {obj.location}")
-    print(f"Signal: {obj.signal_strength} minutes")
+    print(f"Signal: {obj.signal_strength}/10")
+    print(f"Duration: {obj.duration_minutes} minutes")
     print(f"Witness: {obj.witness_count}")
     print(f"Message: '{obj.message_received}'")
 
@@ -63,7 +64,7 @@ if __name__ == "__main__":
             "message_received": "Greetings from Zeta Reticuli",
             "is_verified": True
         }
-        report = AlienContact(**data)
+        report = AlienContact.model_validate(data)
         printer(report)
         print("\n")
 
@@ -79,14 +80,12 @@ if __name__ == "__main__":
             "contact_type": "telepathic",
             "signal_strength": 4.5,
             "duration_minutes": 10,
-            "witness_count": 32,
+            "witness_count": 2,
             "message_received": "Null",
             "is_verified": False
         }
-        invalid_reportreport = AlienContact(**invalid_report)
+        invalid_reportreport = AlienContact.model_validate(invalid_report)
         printer(invalid_reportreport)
 
-    except ValueError as e:
-        print(e.errors()[0]["msg"][13:])
     except ValidationError as e:
         print(e.errors()[0]["msg"])

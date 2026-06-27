@@ -1,39 +1,46 @@
-from ex1 import (TransformCreatureFactory,
-                 HealingCreatureFactory)
+#!/usr/bin/env python3
+
+from ex1 import HealingCreatureFactory, TransformCreatureFactory
 
 
-def healing(obj: HealingCreatureFactory) -> None:
-    sproulting = obj.create_base()
-    print("Testing Creature with healing capability")
-    print(" base:")
-    print(sproulting.describe())
-    print(sproulting.attack())
-    print(sproulting.heal())
-    print(" evolved:")
-    bloomele = obj.create_evolved()
-    print(bloomele.describe())
-    print(bloomele.attack())
-    print(bloomele.heal())
+def test_heal_factory(factory: HealingCreatureFactory) -> None:
+    base = factory.create_base()
+    evolved = factory.create_evolved()
+
+    print("base:")
+    print(base.describe())
+    print(base.attack())
+    print(base.heal())
+    print("evolved:")
+    print(evolved.describe())
+    print(evolved.attack())
+    print(evolved.heal())
 
 
-def transforms(obj: TransformCreatureFactory) -> None:
-    shiftling = obj.create_base()
-    print("\nTesting Creature with transform capability")
-    print(" base:")
-    print(shiftling.describe())
-    print(shiftling.attack())
-    print(shiftling.transform())
-    print(shiftling.attack())
-    print(shiftling.revert())
-    print(" envolved:")
-    morphagon = obj.create_evolved()
-    print(morphagon.describe())
-    print(morphagon.attack())
-    print(morphagon.transform())
-    print(morphagon.attack())
-    print(morphagon.revert())
+def test_transform_factory(factory: TransformCreatureFactory) -> None:
+    base = factory.create_base()
+    evolved = factory.create_evolved()
+
+    print("base:")
+    print(base.describe())
+    print(base.attack())
+    print(base.transform())
+    print(base.attack())
+    print(base.revert())
+    print("evolved:")
+    print(evolved.describe())
+    print(evolved.attack())
+    print(evolved.transform())
+    print(evolved.attack())
+    print(evolved.revert())
 
 
 if __name__ == "__main__":
-    healing(HealingCreatureFactory())
-    transforms(TransformCreatureFactory())
+    heal = HealingCreatureFactory()
+    transform = TransformCreatureFactory()
+
+    print("Testing Creature with healing capability")
+    test_heal_factory(heal)
+    print()
+    print("Testing Creature with transform capability")
+    test_transform_factory(transform)

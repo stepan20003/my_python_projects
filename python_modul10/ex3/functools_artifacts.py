@@ -10,12 +10,12 @@ def spell_reducer(spells: list[int], operation: str) -> int:
         return reduce(max, spells)
     if operation == 'min':
         return reduce(min, spells)
+    if operation == "multiply":
+        return reduce(operator.mul, spells)
     try:
-        name = getattr(operator, operation)
-        result = reduce(name, spells)
-    except Exception as e:
-        print(e)
-    return result
+        return reduce(getattr(operator, operation), spells)
+    except AttributeError:
+        return 0
 
 
 def partial_enchanter(base_enchantment: Callable) -> dict[str, Callable]:
@@ -58,7 +58,7 @@ def spell_dispatcher() -> Callable[[Any], str]:
 if __name__ == "__main__":
     print("Testing spell reducer...")
     print(f"Sum: {spell_reducer([30,40,30],'add')}")
-    print(f"Product: {spell_reducer([100, 2400],'mul')}")
+    print(f"Product: {spell_reducer([100, 2400],'multiply')}")
     print(f"Max: {spell_reducer([20,40,4],'max')}")
     print()
     print("Testing memoized fibonacci...")

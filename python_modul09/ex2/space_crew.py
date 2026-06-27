@@ -12,11 +12,11 @@ class Rank(Enum):
 
 
 class CrewMember(BaseModel):
-    member_id: str = Field(min_lenght=3, max_lenght=10)
-    name: str = Field(min_lenght=2, max_lenght=50)
+    member_id: str = Field(min_length=3, max_length=10)
+    name: str = Field(min_length=2, max_length=50)
     rank: Rank
     age: int = Field(ge=18, le=80)
-    specialization: str = Field(min_lenght=3, max_lenght=30)
+    specialization: str = Field(min_length=3, max_length=30)
     years_experience: int = Field(ge=0, le=50)
     is_active: bool = True
 
@@ -45,9 +45,9 @@ class SpaceMission(BaseModel):
         if self.duration_days > 365:
             for i in self.crew:
                 count += i.years_experience
-            if count / len(self.crew) <= 5:
-                raise ValueError("Long missions (> 365 days)"
-                                 " need 50% experienced crew (5+ years)")
+            if count / len(self.crew) < 5:
+                raise ValueError(f"Long missions (> 365 days)"
+                                 f" need {50}% experienced crew (5+ years)")
         for i in self.crew:
             if not i.is_active:
                 raise ValueError("All crew members must be active")
@@ -97,7 +97,7 @@ if __name__ == "__main__":
         ]
     }
     try:
-        mission = SpaceMission(**valid_data)
+        mission = SpaceMission.model_validate(valid_data)
 
         print("Valid mission created:")
         print(f"Mission: {mission.mission_name}")
@@ -139,7 +139,7 @@ if __name__ == "__main__":
     }
 
     try:
-        SpaceMission(**invalid_data)
+        SpaceMission.model_validate(invalid_data)
 
     except ValidationError as e:
         print("Expected validation error:")

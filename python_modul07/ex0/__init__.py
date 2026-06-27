@@ -1,4 +1,6 @@
-from .creaturefactory import FlameFactory, AquaFactory, CreatureFactory
+#!/usr/bin/env python3
+
+from .creature_factory import CreatureFactory, FlameFactory, AquaFactory
 from .creature import Creature
 
-__all__ = ["FlameFactory", "Creature", "AquaFactory", "CreatureFactory"]
+__all__ = ["CreatureFactory", "FlameFactory", "AquaFactory", "Creature"]
